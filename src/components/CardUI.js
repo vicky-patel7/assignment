@@ -3,6 +3,7 @@ import { Card, Typography, CardContent, CardMedia, Grid, Button } from '@mui/mat
 
 
 const CardUI = ({ users, loading }) => {
+  console.log(users)
   if (loading) {
     return <h2>Please wait a while. Its Loading...</h2>;
   }

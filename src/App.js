@@ -12,19 +12,28 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(20);
 
-  const getData = () => {
-    fetch('heliverse_mock_data.json')
-    .then(function (response) {
-      setLoading(false);
-      return response.json();
-    }).then(function (myJson) {
-      setData(myJson)
-      setLoading(false);
-    });
+  const getData=()=>{
+    fetch('heliverse_mock_data.json'
+    ,{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    }
+    )
+      .then(function(response){
+        setLoading(true);
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        setData(myJson);
+        setLoading(false);
+      });
   }
-  useEffect(() => {
+  useEffect(()=>{
     getData()
-  }, [])
+  },[])
 
   const indexOfLastUser = currentPage * 20;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -35,14 +44,14 @@ function App() {
     setCurrentPage(pageNumber)
   }
 
-  
+
 
   return (
     <div className="App">
       <Header />
       <Filter />
-      <CardUI className = "cards" users = {currentUsers} loading = {loading}/>
-      <PaginationBar usersPerPage={usersPerPage} totalUsers={data.length} paginate = {paginate}/>
+      <CardUI className="cards" users={currentUsers} loading={loading} />
+      <PaginationBar usersPerPage={usersPerPage} totalUsers={data.length} paginate={paginate} />
     </div>
   );
 }
